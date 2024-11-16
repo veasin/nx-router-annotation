@@ -1,4 +1,4 @@
-# nx-cache-redis
+# nx-router-annotation
 router annotation for nx
 
 > composer require urn2/nx-router-annotation
@@ -9,7 +9,7 @@ composer.json
 ```json
 {
 	"scripts":{
-		"routeMake":"nx\\tools\\routerAnnotation::Make",
+		"routeMake":"nx\\tools\\routeAnnotation::Make",
 		"route": "@routeMake --sort \\any\\controllers\\ --file /route.php -o"
 	}
 }

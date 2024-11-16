@@ -1,7 +1,7 @@
 <?php
 namespace nx\tools;
 
-final class routerAnnotation{
+final class routeAnnotation{
 	static function Make($event):void{
 		$args=$event->getArguments();
 		$_i_src=array_search('--src', $args);
