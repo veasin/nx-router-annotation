@@ -1,7 +1,7 @@
 <?php
 namespace nx\tools;
 
-final class routerAttribute{
+final class routerAnnotation{
 	static function Make($event):void{
 		$args=$event->getArguments();
 		$_i_src=array_search('--src', $args);
@@ -148,8 +148,8 @@ final class routerAttribute{
 			$_sub_uri='';
 			$_actions=[];
 			foreach($attrs as [$attr, $params]){
-				if(!str_starts_with($attr, "nx\attributes\\router")) continue;
-				$attr=substr($attr, strlen("nx\attributes\\router") + 1);
+				if(!str_starts_with($attr, "nx\annotations\\router")) continue;
+				$attr=substr($attr, strlen("nx\annotations\\router") + 1);
 				switch($attr){
 					case "REST":
 						@[$_uri, $_sub_uri, $_action]=$params;

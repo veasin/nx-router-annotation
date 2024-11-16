@@ -1,6 +1,6 @@
 {
-  "name": "veasin/nx-router-attribute",
-  "description": "router attribute for nx",
+  "name": "veasin/nx-router-annotation",
+  "description": "router annotation for nx",
   "homepage": "https://github.com/veasin/nx",
   "type": "framework",
   "authors": [
@@ -20,10 +20,10 @@
       "nx\\parts\\router\\": "src/parts/",
       "nx\\helpers\\router\\": "src/helpers/",
       "nx\\tools\\": "src/tools/",
-      "nx\\attributes\\": "src/attributes/"
+      "nx\\annotations\\": "src/annotations/"
     }
   },
   "scripts": {
-    "route": "nx\\tools\\routerAttribute::Make"
+    "route": "nx\\tools\\routerAnnotation::Make"
   }
 }

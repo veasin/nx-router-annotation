@@ -1,5 +1,5 @@
 <?php
-namespace nx\attributes\router;
+namespace nx\annotations\router;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_CLASS | \Attribute::IS_REPEATABLE)]

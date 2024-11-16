@@ -13,7 +13,7 @@ namespace nx\parts\router;
  * @property-read array        $setup
  * @property \nx\helpers\input $in
  */
-trait attribute{
+trait annotation{
 	protected function router(): ?\Generator{
 		$setup =$this['router/uri'];
 		$rules=$setup['rules'] ?? [];
