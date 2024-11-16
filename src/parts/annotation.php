@@ -14,6 +14,7 @@ namespace nx\parts\router;
  * @property \nx\helpers\input $in
  */
 trait annotation{
+	static array $annotationMethod=['G'=>'get', 'P'=>'post', 'U'=>'put', 'A'=>'patch', 'D'=>'delete', 'O'=>'options'];
 	protected function router(): ?\Generator{
 		$setup =$this['router/uri'];
 		$rules=$setup['rules'] ?? [];
@@ -21,14 +22,16 @@ trait annotation{
 		$uri=$setup['uri'] ?? (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO']) ?$_SERVER['PATH_INFO'] :$_SERVER['QUERY_STRING']??'');
 		$method=$setup['method'] ?? $this->in['method'] ?? 'unknown';
 
-		yield $this->runtime("uri: {$uri}", 'uri');//默认暂停
+		yield $this->runtime("uri: {$uri}", 'ra');//默认暂停
 		foreach($rules as $rule){//0 method 1 uri 2 action[controller, action, args] 3 action...
-			if(empty($rule[2])) continue;//如果没定义处理方法，那么继续
-			$_method=array_shift($rule);
+			if(empty($rule[1])) continue;//如果没定义处理方法，那么继续
+			[$_m, $_uri] =explode(":", array_shift($rule));
+			$_method =self::$annotationMethod[$_m] ?? $_m;
+
 			if(!($method === $_method || '*' === $_method)) continue;//如果没有匹配直接继续下一个
 			$is_match=0;
 			$params=[];
-			$_uri=array_shift($rule);
+
 			if($uri === $_uri || '*' === $_uri){//如果网址和规则相同
 				$is_match=1;
 			}elseif(preg_match_all('#([d|w]?):(\w*)#', $_uri) > 0){
@@ -40,7 +43,7 @@ trait annotation{
 				$is_match=preg_match($pattern, $uri, $params);
 			}
 			if($is_match){//如果匹配规则成功
-				$this->runtime("route: {$_uri}", 'uri');
+				$this->runtime("route: {$_uri}", 'ra');
 				for($i=0, $max=count($params); $i < $max; $i++){
 					unset($params[$i]);
 				}
@@ -51,6 +54,9 @@ trait annotation{
 								$this->in['params'] =array_key_exists(2, $_call) ?array_merge($params, $_call[2] ?? []) :$params;
 								yield [$_call[0], $_call[1]];
 							}
+						} elseif(str_contains($call, '::')){
+							$this->in['params'] =$params;
+							yield explode("::", $call);
 						}
 					}else{
 						$this->in['params'] =array_key_exists(2, $call) ?array_merge($params, $call[2] ?? []) :$params;
