@@ -25,7 +25,7 @@ trait annotation{
 		yield $this->runtime("uri: {$uri}", 'ra');//默认暂停
 		foreach($rules as $rule){//0 method 1 uri 2 action[controller, action, args] 3 action...
 			if(empty($rule[1])) continue;//如果没定义处理方法，那么继续
-			[$_m, $_uri] =explode(":", array_shift($rule));
+			[$_m, $_uri] =explode(":", array_shift($rule), 2);
 			$_method =self::$annotationMethod[$_m] ?? $_m;
 
 			if(!($method === $_method || '*' === $_method)) continue;//如果没有匹配直接继续下一个
